@@ -8,6 +8,8 @@ import callbackForm from './modules/callbackForm';
 import menuFixed from './modules/menu';
 import mainSlider from './modules/mainSlider';
 import arrowTop from './modules/arrowTop';
+import servicesSlider from './modules/servicesSlider';
+import gallery from './modules/gallery';
 
 // выпадающее меню "выбрать клуб"
 chooseMenu();
@@ -23,3 +25,6 @@ menuFixed();
 mainSlider();
 // стрелка вверх
 arrowTop();
+servicesSlider();
+// слайдер-фотогалерея
+gallery();
