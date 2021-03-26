@@ -57,13 +57,20 @@ class ServicesSlider {
     document.head.appendChild(style);
   }
 
+  checkBtns(slidesToShow) {
+    this.prev.disabled = this.options.position === 0;
+    this.next.disabled = this.options.position === slidesToShow;
+  }
+
   prevSlider() {
     if (this.options.infinity || this.options.position > 0) {
       --this.options.position;
       if (this.options.position < 0) {
         this.options.position = this.slides.length - this.slidesToShow;
+        this.checkBtns(this.slidesToShow);
       }
       this.wrap.style.transform = `translateX(-${this.options.position * (this.options.slidesWidth + (this.slideMarginLeft + this.slideMarginRight))}px)`;
+      this.checkBtns(this.slidesToShow);
     }
   }
 
@@ -72,8 +79,11 @@ class ServicesSlider {
       ++this.options.position;
       if (this.options.position > this.slides.length - this.slidesToShow) {
         this.options.position = 0;
+        this.checkBtns(this.slidesToShow);
       }
       this.wrap.style.transform = `translateX(-${this.options.position * (this.options.slidesWidth + (this.slideMarginLeft + this.slideMarginRight))}px)`;
+      const slidesLeft = this.slidesToShow + (((this.slides.length / 2) - this.slidesToShow) * 2);
+      this.checkBtns(slidesLeft);
     }
   }
 
@@ -112,12 +122,16 @@ class ServicesSlider {
               this.slidesToShow = this.responsive[i].slideToShow;
               this.options.slidesWidth = Math.floor((this.main.clientWidth / this.slidesToShow) - (this.slideMarginLeft + this.slideMarginRight));
               this.addStyle();
+              const slidesLeft = this.slidesToShow + (((this.slides.length / 2) - this.slidesToShow) * 2);
+              this.checkBtns(slidesLeft);
             }
           }
         } else {
           this.slidesToShow = slidesToShowDefault;
           this.options.slidesWidth = Math.floor((this.main.clientWidth / this.slidesToShow) - (this.slideMarginLeft + this.slideMarginRight));
           this.addStyle();
+          const slidesLeft = this.slidesToShow + (((this.slides.length / 2) - this.slidesToShow) * 2);
+          this.checkBtns(slidesLeft);
         }
       };
     checkResponse();
