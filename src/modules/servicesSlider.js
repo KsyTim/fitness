@@ -1,150 +1,172 @@
-const servicesSlider = () => {
-  const servicesSlider = document.querySelector('.services-slider'),
-    track = servicesSlider.querySelector('.slider-track'),
-    servicesSlide = track.querySelectorAll('.services-slider .slide'),
-    slide = track.querySelector('.slide'),
-    slideCount = servicesSlide.length;
-  let slidesToShow,
-    position = 0,
-    itemWidth,
-    slideMarginLeft,
-    slideMarginRight;  
-  servicesSlider.style.position = 'relative';
-  const leftArrow = document.createElement('button');
-  leftArrow.classList.add('slider-arrow');
-  leftArrow.classList.add('prev');
-  const bgcLeft = document.createElement('span');
-  servicesSlider.appendChild(leftArrow);
-  bgcLeft.classList.add('services-left');
-  leftArrow.appendChild(bgcLeft);
-  bgcLeft.insertAdjacentHTML('beforeend', '<img class="services-left-img" src="images/arrow-left.png" alt="Slider: prev"/>');
-  const rightArrow = document.createElement('button');
-  rightArrow.classList.add('slider-arrow');
-  rightArrow.classList.add('next');
-  const bgcRight = document.createElement('span');
-  servicesSlider.appendChild(rightArrow);
-  bgcRight.classList.add('services-right');
-  rightArrow.appendChild(bgcRight);
-  bgcRight.insertAdjacentHTML('beforeend', '<img class="services-right-img" src="images/arrow-right.png" alt="Slider: next"/>');
-  track.style.display = 'flex';
-  track.style.width = '100%';
-  track.style.overflow = 'hidden';
-  const handler = (slides, slidesLeft) => {
-    const checkBtns = (slidesToShow) => {
-      const btnPrev = document.querySelector('.slider-arrow.prev'),
-        btnNext = document.querySelector('.slider-arrow.next');
-      btnPrev.disabled = position === 0;
-      btnNext.disabled = position === slidesToShow;
+class ServicesSlider {
+  constructor({
+    main,
+    wrap,
+    slide,
+    next,
+    prev,
+    infinity = false,
+    position = 0, 
+    slidesToShow = 5, 
+    responsive = []
+    }) {
+    this.main = document.querySelector(main);
+    this.wrap = document.querySelector(wrap);
+    this.slides = document.querySelector(wrap).children;
+    this.slide = document.querySelector(slide);
+    this.slideMarginLeft = parseInt(getComputedStyle(this.slide, true).marginLeft);
+    this.slideMarginRight = parseInt(getComputedStyle(this.slide, true).marginRight);
+    this.prev = document.querySelector(prev);
+    this.next = document.querySelector(next);
+    this.slidesToShow = slidesToShow;
+    this.options = {
+      position, 
+      infinity,
+      slidesWidth: Math.floor((this.main.clientWidth / this.slidesToShow) - (this.slideMarginLeft + this.slideMarginRight))
     };
-    checkBtns(slides);
-    servicesSlider.addEventListener('click', event => {
-      const target = event.target,
-        slideWidth = slide.clientWidth + slideMarginLeft + slideMarginRight;
-      if (target.matches('.services-right, .services-right img')) {
-        position++;
-        for(let i of servicesSlide) {
-          for (let j = 0; j <= ((slideCount/2) + slidesLeft); j++) {
-            if (position == j) {
-              i.style.transform = `translateX(-${j * slideWidth}px)`;
-              checkBtns(slides);
-            }
-          }
-        }
-      } else if (target.matches('.services-left, .services-left img')) {
-        position--;
-        for(let i of servicesSlide) {
-          for (let j = 0; j <= ((slideCount/2) + slidesLeft); j++) {
-            if (position == j) {
-              i.style.transform = `translateX(-${j * slideWidth}px)`;
-              checkBtns(slides);
-            }
-          }
-        }
+    this.responsive = responsive;
+  }
+  addClass() {
+    this.main.classList.add('add-services');
+    this.wrap.classList.add('add-services__wrap');
+    for (const item of this.slides) {
+      item.classList.add('add-services__item');
+    }
+  }
+
+  addStyle() {
+    let style = document.getElementById('add-services-style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'add-services-style';
+    }
+    style.textContent = `
+      .add-services{
+        overflow: hidden !important;
+        position: relative;
       }
-    });
-  }; 
-  const width280 = () => {
-    console.log('ifffff280');
-    slidesToShow = 1;
-    itemWidth = track.clientWidth / slidesToShow;
-    slideMarginLeft = parseInt(getComputedStyle(slide, true).marginLeft);
-    slideMarginRight = parseInt(getComputedStyle(slide, true).marginRight); 
-    servicesSlide.forEach(item => {
-      item.style.minWidth = `${itemWidth - (slideMarginLeft + slideMarginRight)}px`;
-    });
-    handler(slidesToShow+8, 4);
-  },
-    width567 = () => {
-      console.log('ifffff567');
-      slidesToShow = 2;
-      itemWidth = track.clientWidth / slidesToShow;
-      slideMarginLeft = parseInt(getComputedStyle(slide, true).marginLeft);
-      slideMarginRight = parseInt(getComputedStyle(slide, true).marginRight); 
-      servicesSlide.forEach(item => {
-        item.style.minWidth = `${itemWidth - (slideMarginLeft + slideMarginRight)}px`;
-      });
-      handler(slidesToShow+6, 3);
-    }, 
-    width768 = () => {
-      console.log('iffff768');
-      slidesToShow = 3;
-      itemWidth = track.clientWidth / slidesToShow;
-      slideMarginLeft = parseInt(getComputedStyle(slide, true).marginLeft);
-      slideMarginRight = parseInt(getComputedStyle(slide, true).marginRight); 
-      servicesSlide.forEach(item => {
-        item.style.minWidth = `${itemWidth - (slideMarginLeft + slideMarginRight)}px`;
-      });
-      handler(slidesToShow+4, 2);
-    },
-    width992 = () => {      
-      console.log('iffff992');
-      slidesToShow = 4;
-      itemWidth = track.clientWidth / slidesToShow;
-      slideMarginLeft = parseInt(getComputedStyle(slide, true).marginLeft);
-      slideMarginRight = parseInt(getComputedStyle(slide, true).marginRight); 
-      servicesSlide.forEach(item => {
-        item.style.minWidth = `${itemWidth - (slideMarginLeft + slideMarginRight)}px`;
-      });
-      handler(slidesToShow+2, 1);
-    },
-    width1200 = () => {
-      console.log('ifffff12000');
-      slidesToShow = 5;
-      itemWidth = track.clientWidth / slidesToShow;
-      slideMarginLeft = parseInt(getComputedStyle(slide, true).marginLeft);
-      slideMarginRight = parseInt(getComputedStyle(slide, true).marginRight); 
-      servicesSlide.forEach(item => {
-        item.style.minWidth = `${itemWidth - (slideMarginLeft + slideMarginRight)}px`;
-      });
-      handler(slidesToShow+0, 0);
-    };
-  const mainFunc = () => {
-    console.log('mainFunc');
-    if (document.documentElement.clientWidth >= 1200) {
-      width1200();
+      .add-services__wrap{
+        display: flex !important;
+        transition: transform .3s;
+        will-change: transform;
+      }
+      .add-services__item{
+        min-width: ${this.options.slidesWidth}px !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  prevSlider() {
+    if (this.options.infinity || this.options.position > 0) {
+      --this.options.position;
+      if (this.options.position < 0) {
+        this.options.position = this.slides.length - this.slidesToShow;
+      }
+      this.wrap.style.transform = `translateX(-${this.options.position * (this.options.slidesWidth + (this.slideMarginLeft + this.slideMarginRight))}px)`;
     }
-    if (document.documentElement.clientWidth < 1200 && document.documentElement.clientWidth >= 992) {
-      width992();
+  }
+
+  nextSlider() {
+    if (this.options.infinity || this.options.position < this.slides.length - this.slidesToShow) {
+      ++this.options.position;
+      if (this.options.position > this.slides.length - this.slidesToShow) {
+        this.options.position = 0;
+      }
+      this.wrap.style.transform = `translateX(-${this.options.position * (this.options.slidesWidth + (this.slideMarginLeft + this.slideMarginRight))}px)`;
     }
-    if (document.documentElement.clientWidth < 992 && document.documentElement.clientWidth >= 768) {
-      width768();
+  }
+
+  controlSlider() {
+    this.prev.addEventListener('click', this.prevSlider.bind(this));
+    this.next.addEventListener('click', this.nextSlider.bind(this));
+  }
+
+  addArrow() {
+    this.prev = document.createElement('button');
+    this.prev.classList.add('slider-arrow');
+    this.prev.classList.add('prev');
+    this.bgcLeft = document.createElement('span');
+    this.main.appendChild(this.prev);
+    this.bgcLeft.classList.add('services-left');
+    this.prev.appendChild(this.bgcLeft);
+    this.bgcLeft.insertAdjacentHTML('beforeend', '<img class="services-left-img" src="images/arrow-left.png" alt="Slider: prev"/>');
+    this.next = document.createElement('button');
+    this.next.classList.add('slider-arrow');
+    this.next.classList.add('next');
+    this.bgcRight = document.createElement('span');
+    this.main.appendChild(this.next);
+    this.bgcRight.classList.add('services-right');
+    this.next.appendChild(this.bgcRight);
+    this.bgcRight.insertAdjacentHTML('beforeend', '<img class="services-right-img" src="images/arrow-right.png" alt="Slider: next"/>');
+  }
+
+  responsiveInit() {
+    const slidesToShowDefault = this.slidesToShow,
+      allResponse = this.responsive.map(item => item.breakpoint), 
+      maxResponse = Math.max(...allResponse),
+      checkResponse = () => {
+        if (document.documentElement.clientWidth < maxResponse) {
+          for (let i = 0; i < allResponse.length; i++) {
+            if (document.documentElement.clientWidth < allResponse[i]) {
+              this.slidesToShow = this.responsive[i].slideToShow;
+              this.options.slidesWidth = Math.floor((this.main.clientWidth / this.slidesToShow) - (this.slideMarginLeft + this.slideMarginRight));
+              this.addStyle();
+            }
+          }
+        } else {
+          this.slidesToShow = slidesToShowDefault;
+          this.options.slidesWidth = Math.floor((this.main.clientWidth / this.slidesToShow) - (this.slideMarginLeft + this.slideMarginRight));
+          this.addStyle();
+        }
+      };
+    checkResponse();
+    window.addEventListener('resize', checkResponse);
+  }
+
+  init() {
+    this.addClass();
+    this.addStyle();
+    if (this.prev && this.next) {
+      this.controlSlider();
+    } else {
+      this.addArrow();
+      this.controlSlider();
     }
-    if (document.documentElement.clientWidth < 768 && document.documentElement.clientWidth >= 567) {
-      width567();
+    if (this.responsive) {
+      this.responsiveInit();
     }
-    if (document.documentElement.clientWidth < 567 && document.documentElement.clientWidth >= 280) {
-      width280();
-    }
-  };
-  mainFunc();
-  window.addEventListener('resize', () => {
-    console.log('resize');
-    const servicesSlideNew = track.querySelectorAll('.services-slider .slide');
-    servicesSlideNew.forEach(item => {
-      item.style.transform = 'translateX(0px)';
-    });
-    mainFunc();
-  });
+  }
 };
 
-export default servicesSlider;
+const services = () => {
+  const slider = new ServicesSlider({
+    main: '.services-slider',
+    wrap: '.slider-track',
+    slide: '.services-slider .slide',
+    slidesToShow: 5, 
+    infinity: false,
+    responsive: [
+      {
+        breakpoint: 1200,
+        slideToShow: 4,
+      },
+      {
+        breakpoint: 992,
+        slideToShow: 3,
+      },
+      {
+        breakpoint: 768,
+        slideToShow: 2,
+      },
+      {
+        breakpoint: 576,
+        slideToShow: 1,
+      }
+    ]
+  });
+  slider.init();
+};
+
+export default services;
+
