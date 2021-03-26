@@ -6,7 +6,7 @@ const menuFixed = () => {
     mobileMenu = document.querySelector('.popup-menu'), 
     gift = document.querySelector('.fixed-gift');
   // фиксация меню при прокрутке до элемента
-  window.addEventListener('scroll', () => {
+  const scrollMenu = () => {
     // если ширина экрана менее 768px, фиксируем меню 
     if (document.documentElement.offsetWidth <= 766) {
       // если высота до элемента меньше либо равна 0 (то есть мы проскролили до элемента и ниже него), то фиксирум меню
@@ -17,15 +17,26 @@ const menuFixed = () => {
           right: 0;
           left: 0;
         `;
-        gift.style.top = '70px';
+        if (gift) {
+          gift.style.top = '70px';
+        }
       } 
       // если высота до элемента больше 0 (то есть мы еще недоскролили до элемента или при скролле наверх страницы), то возвращаем меню в первоначальное положение
       if (mainSlider.getBoundingClientRect().top > 0) {
         menu.style.position = 'unset';
+        if (gift) {
+          gift.style.top = '15px';
+        }
+      }
+    } else {
+      menu.style.position = 'unset';
+      if (gift) {
         gift.style.top = '15px';
       }
     }
-  });
+  };
+  window.addEventListener('scroll', scrollMenu);
+  window.addEventListener('resize', scrollMenu);
   document.addEventListener('click', event => {
     const target = event.target;
     // при клике на "меню" - открыть мобильное меню
