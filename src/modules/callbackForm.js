@@ -6,7 +6,9 @@ const callbackForm = () => {
   document.addEventListener('click', event => {
     const target = event.target;
     // открыть модальное окно
-    if (target.matches('[data-popup="#callback_form"]')) {
+    if (target.matches('#footer .callback-btn')) {
+      callbackModal.style.display = 'none';
+    } else if (target.matches('[data-popup="#callback_form"]')) {
       callbackModal.style.display = 'block';
       // при клике на "закрыть" - скрываем модальное окно
     } else if (target.matches('.close_icon') && target.closest('.popup').getAttribute('id') === 'callback_form'){

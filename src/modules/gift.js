@@ -16,6 +16,8 @@ const gift = () => {
       // при клике по подложке - скрываем моадльное окно
     } else if (target.matches('.overlay') && target.closest('.popup').getAttribute('id') === 'gift') {
       giftModal.style.display = 'none';
+    } else if (target.matches('#gift .close-btn')) {
+      giftModal.style.display = 'none';
     }
   });
 };

@@ -10,6 +10,8 @@ import mainSlider from './modules/mainSlider';
 import arrowTop from './modules/arrowTop';
 import services from './modules/servicesSlider';
 import gallery from './modules/gallery';
+import calculator from './modules/mainCalculator';
+import validator from './modules/validator';
 
 // выпадающее меню "выбрать клуб"
 chooseMenu();
@@ -25,6 +27,11 @@ menuFixed();
 mainSlider();
 // стрелка вверх
 arrowTop();
+// слайдер "услуги"
 services();
 // слайдер-фотогалерея
 gallery();
+// калькулятор клубные карты
+calculator();
+// валидатор полей форм на странице
+validator();
