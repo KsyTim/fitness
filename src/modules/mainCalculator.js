@@ -20,7 +20,7 @@ const calculator = () => {
               }
             });
             const newObj = obj.filter(elem => elem);
-            if (promo.value === 'ТЕЛО2021') {
+            if (promo.value === 'ТЕЛО2019') {
               priceTotal.textContent = Math.ceil(+priceTotal.textContent * 0.7);
             } else {
               if (+cardType.value === 1) {
