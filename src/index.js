@@ -12,6 +12,7 @@ import services from './modules/servicesSlider';
 import gallery from './modules/gallery';
 import calculator from './modules/mainCalculator';
 import validator from './modules/validator';
+import sendForm from './modules/sendForm';
 
 // выпадающее меню "выбрать клуб"
 chooseMenu();
@@ -35,3 +36,5 @@ gallery();
 calculator();
 // валидатор полей форм на странице
 validator();
+// отправка данных формы
+sendForm();

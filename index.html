@@ -345,6 +345,7 @@
                     <p class="personal-data">
                         <input type="checkbox" required id="card_check"><label for="card_check">Я согласен на обработку
                         персональных данных</label>
+                        <input type="hidden" name="price_amount" value=''>
                     </p>
                     <p class="submit">
                         <button type="submit" class="btn card-order-btn">Забронировать карту</button>
@@ -388,6 +389,7 @@
                                 <p>Россия, Москва, 7-я Кожуховская ул.,&nbsp;9</p>
                             </label>
                             </div>
+                            <input type="hidden" name="form_name" value="Выбрать клуб - main">
                             <div class="club">
                                 <input type="radio" id="footer_leto_schelkovo" name="club-name" value="schelkovo"><label
                                     for="footer_leto_schelkovo">
@@ -510,6 +512,21 @@
         <div class="form-content">
             <h4>У нас для вас есть подарок!</h4>
             <p>Введите промо-код ТЕЛО2019 и получите скидку 30%</p>
+            <button class="btn close-btn">OK</button>
+        </div>
+    </div>
+
+</div>
+<div class="popup" id="privacy">
+    <div class="overlay">
+    </div>
+    <div class="form-wrapper">
+        <div class="close-form">
+            <img src="images/close-icon.png" alt="close" class="close_icon">
+        </div>
+        <div class="form-content">
+            <h4></h4>
+            <p>Для продолжения Вы должны дать согласие на обработку персональных данных</p>
             <button class="btn close-btn">OK</button>
         </div>
     </div>

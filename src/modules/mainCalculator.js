@@ -12,31 +12,67 @@ const calculator = () => {
             const parser = new DOMParser(),
               doc = parser.parseFromString(html, "text/html"),
               docForm = doc.getElementById('card_order'),
-              cost = docForm.querySelectorAll('label .cost'),
               obj = [];
-            cost.forEach((item, i ) => {
-              if(item.closest('label').getAttribute('for') !== 't4') {
-                obj[i] = +item.textContent.replace(/[a-z]/g, '');
+              if (docForm) {
+                const cost = docForm.querySelectorAll('label .cost');
+                cost.forEach((item, i ) => {
+                  if(item.closest('label').getAttribute('for') !== 't4') {
+                    obj[i] = +item.textContent.replace(/[a-z]/g, '');
+                  }
+                });
               }
-            });
-            const newObj = obj.filter(elem => elem);
+            const newObj = obj.filter(elem => elem),
+              getPriceValue = () => {
+                const value = document.getElementById('price-total').textContent,
+                  input = document.querySelector('.personal-data input[type="hidden"]');
+                if (input) {
+                  input.removeAttribute('value');
+                  input.setAttribute('value', `${value}`);
+                } 
+              },
+              getPromoSum = () => {
+                if (promo.value === 'ТЕЛО2019') {
+                  priceTotal.textContent = Math.ceil(+priceTotal.textContent * 0.7);
+                  getPriceValue();
+                }
+              };
             if (promo.value === 'ТЕЛО2019') {
-              priceTotal.textContent = Math.ceil(+priceTotal.textContent * 0.7);
-            } else {
               if (+cardType.value === 1) {
+                priceTotal.textContent = Math.ceil(+newObj[0] * 0.7);
+                getPriceValue();
+              } else if (+cardType.value === 6) {
+                priceTotal.textContent = Math.ceil(+newObj[1] * 0.7);
+                getPriceValue();
+              } else if (+cardType.value === 9) {
+                priceTotal.textContent = Math.ceil(+newObj[2] * 0.7);
+                getPriceValue();
+              } else if (+cardType.value === 12) {
+                priceTotal.textContent = Math.ceil(+newObj[3] * 0.7);
+                getPriceValue();
+              }
+            } else {
+             if (+cardType.value === 1) {
+                getPromoSum();
                 priceTotal.textContent = newObj[0];
+                getPriceValue();
               }
               if (+cardType.value === 6) {
+                getPromoSum();               
                 priceTotal.textContent = newObj[1];
+                getPriceValue(); 
               }
               if (+cardType.value === 9) {
+                getPromoSum();
                 priceTotal.textContent = newObj[2];
+                getPriceValue();
               }
               if (+cardType.value === 12) {
+                getPromoSum();
                 priceTotal.textContent = newObj[3];
-              }
+                getPriceValue(); 
+              } 
             }
-        })
+        });
     };
     let clubPage = clubName.value,
       cardType = cardsType;
@@ -52,8 +88,8 @@ const calculator = () => {
         getData(clubPage, cardType);
       }
       if (target.matches('[placeholder="Промокод"]')) {
-        getData(clubPage, cardType);
-      }
+        getData(clubPage, cardType);  
+      }  
     })
   }
 };  

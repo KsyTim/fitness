@@ -1,3 +1,5 @@
+import menuFixed from "./menu";
+
 const validator = () => { 
   const form = document.querySelectorAll('form');
 	form.forEach(item => {
@@ -132,10 +134,6 @@ const validator = () => {
       if (target.matches('.personal-data input')) {
         item.addEventListener('change', event => {
           const target = event.target;
-          console.log(target);
-          console.log(target.id);
-          console.log(privacy);
-          console.log(privacy.id);
           privacy.forEach(elem => {
             if (target.id === elem.id) {
               elem.setAttribute('checked', 'checked');
@@ -153,11 +151,26 @@ const validator = () => {
       if (target.matches('button')) {
         const check = target.closest('form').querySelector('.personal-data input');
         if (check && !check.checked) {
-          alert('Для продолжения Вы должны дать согласие на обработку персональных данных');
-          return false;
+          event.preventDefault();
+          const mes = document.getElementById('privacy');
+          mes.style.display = 'block';
+          mes.addEventListener('click', event => {
+            const target = event.target;
+            if (target.matches('.close_icon') && target.closest('.popup').getAttribute('id') === 'privacy'){
+              mes.style.display = 'none';
+              return false;
+              // при клике по подложке - скрываем модальное окно
+            } else if (target.matches('.overlay') && target.closest('.popup').getAttribute('id') === 'privacy') {
+              mes.style.display = 'none';
+              return false;
+            } else if (target.matches('#privacy .close-btn') && target.closest('.popup').getAttribute('id') === 'privacy') {
+              mes.style.display = 'none';
+              return false;
+            }
+          })
         } else {
-          return true;
-        }
+            return true;
+          }
       } 
     });
   });

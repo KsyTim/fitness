@@ -60,6 +60,19 @@ const menuFixed = () => {
         top: elemPosition,
         behavior: 'smooth'
       });
+    } else if (target.matches('.top-menu .hidden-small li a')) {
+      event.preventDefault();
+      // значение ссылки (href) по кликнутому элементу
+      const id = target.getAttribute('href').substr(1),
+        // элемент с id
+        scrollTo = document.getElementById(id),
+        // значение до верхней границы элемента, по которому происходит клик
+        elemPosition = scrollTo.getBoundingClientRect().top;
+      // плавная прокуратка на необходимое количество px до элемента
+      window.scrollBy({
+        top: elemPosition,
+        behavior: 'smooth'
+      });
     }
   });
 };
