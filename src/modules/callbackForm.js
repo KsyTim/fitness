@@ -8,6 +8,32 @@ const callbackForm = () => {
     // открыть модальное окно
     if (target.matches('#footer .callback-btn')) {
       callbackModal.style.display = 'none';
+      const check = target.closest('form').querySelector('.choose-club input[type="radio"]');
+        if (check && !check.checked) {
+          event.preventDefault();
+          const mes = document.getElementById('privacy');
+          mes.style.display = 'block';
+          mes.querySelector('p').textContent = 'Пожалуйста выберите клуб, поставив рядом галочку';
+          mes.addEventListener('click', event => {
+            const target = event.target;
+            if (target.matches('.close_icon') && target.closest('.popup').getAttribute('id') === 'privacy'){
+              mes.style.display = 'none';
+              mes.querySelector('p').textContent = 'Для продолжения Вы должны дать согласие на обработку персональных данных';
+              return false;
+              // при клике по подложке - скрываем модальное окно
+            } else if (target.matches('.overlay') && target.closest('.popup').getAttribute('id') === 'privacy') {
+              mes.style.display = 'none';
+              mes.querySelector('p').textContent = 'Для продолжения Вы должны дать согласие на обработку персональных данных';
+              return false;
+            } else if (target.matches('#privacy .close-btn') && target.closest('.popup').getAttribute('id') === 'privacy') {
+              mes.style.display = 'none';
+              mes.querySelector('p').textContent = 'Для продолжения Вы должны дать согласие на обработку персональных данных';
+              return false;
+            }
+          })
+        } else {
+          return true;
+        }
     } else if (target.matches('[data-popup="#callback_form"]')) {
       callbackModal.style.display = 'block';
       // при клике на "закрыть" - скрываем модальное окно
@@ -17,6 +43,16 @@ const callbackForm = () => {
     } else if (target.matches('.overlay') && target.closest('.popup').getAttribute('id') === 'callback_form') {
       callbackModal.style.display = 'none';
     }
+    document.querySelectorAll('#footer_form input[type="radio"]').forEach(elem => {
+      if (target.id === elem.id) {
+        elem.setAttribute('checked', 'checked');
+        if (elem.checked) {
+          elem.setAttribute('checked', 'checked');
+        } 
+      } else if (!elem.checked){
+        elem.removeAttribute('checked');
+      }
+    });
   });
 };
 

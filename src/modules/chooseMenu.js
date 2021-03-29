@@ -17,6 +17,8 @@ const chooseMenu = () => {
       // если элемент скрыт
     } else if (target.matches('.clubs-list p') && !chooseClub.hasAttribute('style')) {
       chooseClub.style.display = 'block';
+    } else if (!target.matches('.club-list ul[style="display: block"]')) {
+      chooseClub.style.display = 'none';
     }
   });
 };
