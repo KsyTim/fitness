@@ -52,7 +52,6 @@ const calculator = () => {
               }
             } else {
              if (+cardType.value === 1) {
-               console.log('hello');
                 getPromoSum();
                 priceTotal.textContent = newObj[0];
                 getPriceValue();
